@@ -1,0 +1,126 @@
+scraping_task:
+  description: >
+    Extract comprehensive content from the specified website URL.
+    Navigate through the site structure, handle different content types,
+    and gather relevant information including text, links, images, and metadata.
+    Respect robots.txt and implement rate limiting.
+
+    Parameters:
+    - max_depth: 3
+    - max_pages: 100
+    - delay_between_requests: 1
+    - respect_robots_txt: true
+    - handle_javascript: true
+    - extract_images: true
+    - follow_redirects: true
+    - timeout: 30
+
+    Context:
+    - Focus on extracting meaningful content while respecting site policies
+    - Handle dynamic JavaScript-rendered pages and static HTML
+    - Maintain session consistency across pages
+
+  expected_output: >
+    {
+      "html": "...raw html...",
+      "text": "...cleaned text...",
+      "metadata": {
+        "title": "...",
+        "description": "...",
+        "keywords": [...]
+      },
+      "links": {
+        "internal": [...],
+        "external": [...]
+      },
+      "images": [...],
+      "structure": "...",
+      "timestamp": "ISO8601",
+      "session_id": "uuid"
+    }
+
+  tools:
+    - scraper_tool
+
+  agent: dynamic_scraper
+
+
+processing_task:
+  description: >
+    Analyze and clean the raw content retrieved from the scraping task.
+    Organize and structure the data, extract key entities, generate summaries,
+    and categorize the content for optimized querying.
+
+    Parameters:
+    - chunk_size: 1000
+    - overlap_size: 200
+    - generate_tags: true
+    - extract_entities: true
+    - remove_duplicates: true
+    - content_scoring: true
+
+    Context:
+    - Organize unstructured text into meaningful topics and summaries
+    - Remove boilerplate and irrelevant content
+    - Ensure clean formatting for query efficiency
+
+  expected_output: >
+    {
+      "structured_content": [
+        {
+          "topic": "...",
+          "summary": "...",
+          "tags": [...],
+          "entities": [...],
+          "score": 0.95,
+          "content_block": "..."
+        }
+      ],
+      "search_index": "index_reference",
+      "metadata": {...}
+    }
+
+  tools:
+    - processor_tool
+
+  agent: content_analyzer
+
+
+query_task:
+  description: >
+    Respond to user queries by searching processed content.
+    Provide detailed, contextual answers with source citations and confidence scores.
+
+    Parameters:
+    - max_results: 10
+    - min_relevance_score: 0.3
+    - include_context: true
+    - max_answer_length: 1000
+    - citation_format: "academic"
+    - confidence_threshold: 0.7
+
+    Context:
+    - Respond only using previously processed content
+    - Always cite sources
+    - Acknowledge uncertainty if data is insufficient
+
+  expected_output: >
+    {
+      "answer": "Final response",
+      "supporting_passages": [...],
+      "citations": [
+        {
+          "url": "...",
+          "title": "...",
+          "confidence": 0.91
+        }
+      ],
+      "confidence_score": 0.91,
+      "related_topics": [...],
+      "notes": "Any limitations or assumptions"
+    }
+
+  tools:
+    - query_tool
+
+  agent: query_handler
