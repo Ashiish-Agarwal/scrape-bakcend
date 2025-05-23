@@ -248,7 +248,7 @@ Create `src/my_project/main.py`:
 - Basic health check endpoint
 - Environment variable loading
 
-### Step 15: Implement Core Endpoints -- wokring on this ok  -- markdown here
+### Step 15: Implement Core Endpoints -- wokring done  
 
 #### A. Scraping Endpoint
 **POST `/scrape-website`**
@@ -271,7 +271,7 @@ Create `src/my_project/main.py`:
 - Generate AI-powered answers
 - Return answers with source citations
 
-### Step 16: Implement Management Endpoints
+### Step 16: Implement Management Endpoints --- work done
 
 #### A. Status and Monitoring
 - `GET /scrape-status/{scrape_id}`: Check scraping progress
@@ -284,7 +284,7 @@ Create `src/my_project/main.py`:
 
 ## Phase 6: Integration & Testing (Days 13-15)
 
-### Step 17: Connect Components
+### Step 17: Connect Components -- working on it 
 **Integration Tasks:**
 - Connect FastAPI endpoints with Crew AI workflows
 - Implement proper error handling between layers
